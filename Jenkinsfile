@@ -13,7 +13,7 @@ pipeline {
         }
         stage(' Maven Build') {
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean package -DskipTests'
                 echo 'Maven build Completed'
             }
         }
@@ -23,7 +23,7 @@ pipeline {
                 script {
                     try {
                         sh 'mvn clean test surefire-report:report' 
-                        junit 'src/reports/*-jupiter.xml'
+                        //junit 'src/reports/*-jupiter.xml'
                     } catch (err) {
                         currentBuild.result = 'FAILURE'
                         echo 'Unit tests failed!'
@@ -112,6 +112,11 @@ pipeline {
             // This block will execute if any of the previous stages fail, including unit tests
             echo 'One or more stages have failed!'
             echo 'Pipeline Aborted'
+        }
+
+        always {
+            // Publish Surefire test results
+            junit 'target/surefire-reports/*/.xml'
         }
     }
 }
