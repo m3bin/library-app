@@ -70,8 +70,8 @@ pipeline {
                         )
                     ]
                 )
+                echo 'Copying Jar to EC2 Completed'
             }
-            echo 'Copying Jar to EC2 Completed'
         }
         stage('Run Docker Container') {
             steps {
@@ -104,8 +104,8 @@ pipeline {
                         )
                     ]
                 )
+                echo 'Deployment Completed'
             }
-            echo 'Deployment Completed'
         }
 
     }
