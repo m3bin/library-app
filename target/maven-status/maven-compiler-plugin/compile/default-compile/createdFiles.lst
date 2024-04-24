@@ -1,0 +1,6 @@
+edu/tus/library/dto/Book.class
+edu/tus/library/repository/LibraryRepository.class
+edu/tus/library/message/AddResponse.class
+edu/tus/library/controller/LibraryController.class
+edu/tus/library/SpringBootRestServiceApplication.class
+edu/tus/library/service/LibraryService.class

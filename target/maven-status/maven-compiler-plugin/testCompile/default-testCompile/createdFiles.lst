@@ -1,0 +1,4 @@
+edu/tus/library/controller/LibraryControllerMockMvcTest.class
+edu/tus/library/controller/LibraryAppIT.class
+edu/tus/library/controller/LibraryControllerTest.class
+edu/tus/library/service/LibraryServiceTest.class

@@ -1,0 +1,1 @@
+delete from book where id='sfes322'
