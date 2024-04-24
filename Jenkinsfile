@@ -115,6 +115,9 @@ pipeline {
             echo 'One or more stages have failed!'
             echo 'Pipeline Aborted'
         }
-
+        always {
+            // Publish Surefire test results
+            junit 'target/site/jacoco/index.html'
+        }
     }
 }
