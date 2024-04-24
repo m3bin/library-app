@@ -11,12 +11,19 @@ pipeline {
                 echo 'Git Checkout Completed'
             }
         }
+        stage(' Maven Build') {
+            steps {
+                sh 'mvn clean package'
+                echo 'Maven build Completed'
+            }
+        }
         stage('JUnit Test') {
             steps {
                 // Run unit tests
                 script {
                     try {
-                        sh 'mvn test' // or whatever command you use to run your unit tests
+                        sh 'mvn clean test surefire-report:report' 
+                        junit 'src/reports/*-jupiter.xml'
                     } catch (err) {
                         currentBuild.result = 'FAILURE'
                         echo 'Unit tests failed!'
