@@ -117,6 +117,7 @@ pipeline {
             echo 'Pipeline Aborted'
         }
         always {
+            echo 'always section'
             // Publish Surefire test results
             //junit 'target/site/jacoco/index.html'
         }
