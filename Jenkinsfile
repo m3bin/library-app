@@ -114,9 +114,5 @@ pipeline {
             echo 'Pipeline Aborted'
         }
 
-        always {
-            // Publish Surefire test results
-            junit 'target/surefire-reports/*/.xml'
-        }
     }
 }
