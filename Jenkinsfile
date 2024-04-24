@@ -7,12 +7,14 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
+                // Git checkout
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/m3bin/library-app.git']])
                 echo 'Git Checkout Completed'
             }
         }
         stage(' Maven Build') {
             steps {
+                // Run maven build
                 sh 'mvn clean package -DskipTests'
                 echo 'Maven build Completed'
             }
@@ -35,6 +37,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
+                // Run SonarQube analysis
                 withSonarQubeEnv('SonarQube') {
                     sh '''mvn clean verify sonar:sonar -Dsonar.projectKey=cicd-full -Dsonar.projectName='cicd-full' -Dsonar.host.url=http://localhost:9000''' //port 9000 is default for sonar
                     echo 'SonarQube Analysis Completed'
@@ -43,6 +46,7 @@ pipeline {
         }
         stage('Copy artifact to EC2') {
             steps {
+                // Copy jar file to EC2 instance
                 sshPublisher(
                     publishers: [
                         sshPublisherDesc(
@@ -74,6 +78,7 @@ pipeline {
         }
         stage('Run Docker Container') {
             steps {
+                //Using Ansible to deploy the container in EC2
                 sshPublisher(
                     publishers: [
                         sshPublisherDesc(
@@ -115,7 +120,6 @@ pipeline {
             echo 'Pipeline Aborted'
         }
         always {
-            echo 'always section'
             // Publish Surefire test results
             junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
         }
