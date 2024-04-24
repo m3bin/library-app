@@ -34,14 +34,6 @@ pipeline {
                 echo 'JUnit test Completed'
             }
         }
-        stage('Publish Test Report') {
-            steps {
-                // Publish test report
-                junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-
-            }
-        }
-
         stage('SonarQube Analysis') {
             steps {
                 // Run SonarQube analysis
@@ -125,6 +117,10 @@ pipeline {
             // This block will execute if any of the previous stages fail, including unit tests
             echo 'One or more stages have failed!'
             echo 'Pipeline Aborted'
+        }
+        always {
+            // Publish test report
+            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
         }
     }
 }
