@@ -23,7 +23,7 @@ pipeline {
                         error 'Unit tests failed!'
                     }
                 }
-                echo 'SonarQube Analysis Completed'
+                echo 'JUnit test Completed'
             }
         }
 
