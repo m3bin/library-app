@@ -23,6 +23,7 @@ pipeline {
                 script {
                     try {
                         sh 'mvn clean test surefire-report:report' 
+                        jacoco(execPattern: '**/target/jacoco.exec')
                         //junit 'src/reports/*-jupiter.xml'
                     } catch (err) {
                         currentBuild.result = 'FAILURE'
@@ -117,7 +118,7 @@ pipeline {
         }
         always {
             // Publish Surefire test results
-            junit 'target/site/jacoco/index.html'
+            //junit 'target/site/jacoco/index.html'
         }
     }
 }
