@@ -12,7 +12,7 @@ pipeline {
                 echo 'Git Checkout Completed'
             }
         }
-        stage(' Maven Build') {
+        stage('Maven Build') {
             steps {
                 // Run maven build
                 sh 'mvn clean package -DskipTests'
@@ -32,6 +32,13 @@ pipeline {
                     }
                 }
                 echo 'JUnit test Completed'
+            }
+        }
+        stage('Publish Test Report') {
+            steps {
+                // Publish test report
+                junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+
             }
         }
 
@@ -76,7 +83,7 @@ pipeline {
                 echo 'Copying Jar to EC2 Completed'
             }
         }
-        stage('Run Docker Container') {
+        stage('Deploy Docker Container') {
             steps {
                 //Using Ansible to deploy the container in EC2
                 sshPublisher(
@@ -118,10 +125,6 @@ pipeline {
             // This block will execute if any of the previous stages fail, including unit tests
             echo 'One or more stages have failed!'
             echo 'Pipeline Aborted'
-        }
-        always {
-            // Publish Surefire test results
-            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
         }
     }
 }
