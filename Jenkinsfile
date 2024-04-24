@@ -11,6 +11,21 @@ pipeline {
                 echo 'Git Checkout Completed'
             }
         }
+        stage('JUnit Test') {
+            steps {
+                // Run unit tests
+                script {
+                    try {
+                        sh 'mvn test' // or whatever command you use to run your unit tests
+                    } catch (err) {
+                        currentBuild.result = 'FAILURE'
+                        echo 'Unit tests failed!'
+                        error 'Unit tests failed!'
+                    }
+                }
+                echo 'SonarQube Analysis Completed'
+            }
+        }
 
         stage('SonarQube Analysis') {
             steps {
@@ -84,5 +99,12 @@ pipeline {
             }
         }
 
+    }
+    post {
+        failure {
+            // This block will execute if any of the previous stages fail, including unit tests
+            echo 'One or more stages have failed!'
+            echo 'Pipeline Aborted'
+        }
     }
 }
