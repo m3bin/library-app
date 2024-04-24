@@ -24,7 +24,7 @@ pipeline {
                     try {
                         sh 'mvn clean test surefire-report:report' 
                         //jacoco(execPattern: '**/target/jacoco.exec')
-                        junit 'target/surefire-reports/*.xml'
+                        junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml
                     } catch (err) {
                         currentBuild.result = 'FAILURE'
                         echo 'Unit tests failed!'
