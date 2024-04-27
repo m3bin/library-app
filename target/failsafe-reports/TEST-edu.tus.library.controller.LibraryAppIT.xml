@@ -5,7 +5,7 @@
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="17.0.8.1+1"/>
     <property name="sun.boot.library.path" value="/Applications/SpringToolSuite4.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.aarch64_17.0.8.v20230831-1047/jre/lib"/>
-    <property name="maven.multiModuleProjectDirectory" value="/Users/mebinmathew/Documents/TUS Codebase/library-app"/>
+    <property name="maven.multiModuleProjectDirectory" value="/Users/mebinmathew/Documents/TUS Codebase/library-app/library-app"/>
     <property name="java.vm.vendor" value="Eclipse Adoptium"/>
     <property name="java.vendor.url" value="https://adoptium.net/"/>
     <property name="path.separator" value=":"/>
@@ -13,7 +13,7 @@
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
     <property name="user.country" value="IE"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
-    <property name="user.dir" value="/Users/mebinmathew/Documents/TUS Codebase/library-app"/>
+    <property name="user.dir" value="/Users/mebinmathew/Documents/TUS Codebase/library-app/library-app"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="java.runtime.version" value="17.0.8.1+1"/>
@@ -23,7 +23,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="os.name" value="Mac OS X"/>
     <property name="stderr.encoding" value="UTF-8"/>
-    <property name="classworlds.conf" value="/Users/mebinmathew/Documents/workspace-spring-tool-suite-4-4.20.0.RELEASE/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf2742509959927308793.tmp"/>
+    <property name="classworlds.conf" value="/Users/mebinmathew/Documents/workspace-spring-tools-2/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf15982761264516144728.tmp"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
     <property name="stdout.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/Users/mebinmathew/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
@@ -49,7 +49,7 @@
     <property name="java.version" value="17.0.8.1"/>
     <property name="native.encoding" value="UTF-8"/>
     <property name="java.vendor" value="Eclipse Adoptium"/>
-    <property name="maven.home" value="/Users/mebinmathew/Documents/TUS Codebase/library-app/EMBEDDED"/>
+    <property name="maven.home" value="/Users/mebinmathew/Documents/TUS Codebase/library-app/library-app/EMBEDDED"/>
     <property name="style.color" value="always"/>
     <property name="file.separator" value="/"/>
     <property name="java.version.date" value="2023-08-24"/>
@@ -57,7 +57,7 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="java.vendor.version" value="Temurin-17.0.8.1+1"/>
-    <property name="m2e.build.project.data.socket.port" value="54715"/>
+    <property name="m2e.build.project.data.socket.port" value="60716"/>
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
   </properties>

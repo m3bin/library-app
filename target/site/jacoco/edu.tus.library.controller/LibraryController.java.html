@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LibraryController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">library-app</a> &gt; <a href="index.source.html" class="el_package">edu.tus.library.controller</a> &gt; <span class="el_source">LibraryController.java</span></div><h1>LibraryController.java</h1><pre class="source lang-java linenums">package edu.tus.library.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.tus.library.dto.Book;
+import edu.tus.library.message.AddResponse;
+import edu.tus.library.repository.LibraryRepository;
+import edu.tus.library.service.LibraryService;
+
+
+@RestController
+<span class="fc" id="L34">public class LibraryController {</span>
+
+	@Autowired
+	LibraryRepository repository;
+
+	@Autowired
+	LibraryService libraryService;
+
+<span class="fc" id="L42">	private static final Logger logger = LoggerFactory.getLogger(LibraryController.class);</span>
+
+	@PostMapping(&quot;/books&quot;)
+	public ResponseEntity addBookImplementation(@RequestBody Book book) {
+<span class="fc" id="L46">		String id = libraryService.buildId(book.getIsbn(), book.getAisle());// dependenyMock</span>
+<span class="fc" id="L47">		AddResponse ad = new AddResponse();</span>
+
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		if (!libraryService.checkBookAlreadyExist(id))// mock</span>
+		{
+<span class="fc" id="L51">			logger.info(&quot;Book do not exist so creating one&quot;);</span>
+<span class="fc" id="L52">			book.setId(id);</span>
+<span class="fc" id="L53">			repository.save(book);// mock</span>
+<span class="fc" id="L54">			HttpHeaders headers = new HttpHeaders();</span>
+<span class="fc" id="L55">			headers.add(&quot;unique&quot;, id);</span>
+<span class="fc" id="L56">			ad.setMsg(&quot;Success Book is Added&quot;);</span>
+<span class="fc" id="L57">			ad.setId(id);</span>
+			// return ad;
+<span class="fc" id="L59">			return new ResponseEntity&lt;AddResponse&gt;(ad, headers, HttpStatus.CREATED);</span>
+		} else {
+<span class="fc" id="L61">			logger.info(&quot;Book  exist so skipping creation&quot;);</span>
+<span class="fc" id="L62">			ad.setMsg(&quot;Book already exist&quot;);</span>
+<span class="fc" id="L63">			ad.setId(id);</span>
+<span class="fc" id="L64">			return new ResponseEntity&lt;AddResponse&gt;(ad, HttpStatus.ACCEPTED);</span>
+		}
+
+	}
+	
+	@RequestMapping(&quot;/books/{id}&quot;)
+	public Book getBookById(@PathVariable(value = &quot;id&quot;) String id) {
+		Book book;
+		try {
+<span class="nc" id="L73">			book = repository.findById(id).get();</span>
+
+<span class="nc" id="L75">		} catch (Exception e) {</span>
+<span class="nc" id="L76">			throw new ResponseStatusException(HttpStatus.NOT_FOUND, &quot;Book not found&quot;);</span>
+<span class="nc" id="L77">		}</span>
+<span class="nc" id="L78">		return book;</span>
+	}
+	
+	@RequestMapping(&quot;/books/author&quot;)
+	public ResponseEntity&lt;List&lt;Book&gt;&gt; getBookByAuthor(@RequestParam(value = &quot;authorname&quot;) String authorName) {
+<span class="fc" id="L83">		List&lt;Book&gt; booksByAuthor = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L84">		booksByAuthor=repository.findByAuthor(authorName);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (booksByAuthor.size()&gt;0) {</span>
+<span class="fc" id="L86">			return new ResponseEntity(booksByAuthor, HttpStatus.OK);</span>
+		}else {
+<span class="nc" id="L88">			return new ResponseEntity(booksByAuthor, HttpStatus.NO_CONTENT);</span>
+		}
+	}
+	
+	@PutMapping(&quot;/books/{id}&quot;)
+	public ResponseEntity updateBook(@PathVariable(&quot;id&quot;) String id,@RequestBody Book book) {
+		//String id = libraryService.buildId(book.getIsbn(), book.getAisle());// dependenyMock
+<span class="fc" id="L95">		AddResponse ad = new AddResponse();</span>
+
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (libraryService.checkBookAlreadyExist(id))// mock</span>
+		{
+<span class="fc" id="L99">			logger.info(&quot;Updating existing book&quot;);</span>
+<span class="fc" id="L100">			book.setId(id);</span>
+<span class="fc" id="L101">			repository.save(book);// mock</span>
+<span class="fc" id="L102">			HttpHeaders headers = new HttpHeaders();</span>
+<span class="fc" id="L103">			headers.add(&quot;unique&quot;, id);</span>
+<span class="fc" id="L104">			ad.setMsg(&quot;Success Book is Updated&quot;);</span>
+<span class="fc" id="L105">			ad.setId(id);</span>
+			// return ad;
+<span class="fc" id="L107">			return new ResponseEntity&lt;AddResponse&gt;(ad, headers, HttpStatus.OK);</span>
+		} else {
+<span class="nc" id="L109">			logger.info(&quot;Book does not exist&quot;);</span>
+<span class="nc" id="L110">			ad.setMsg(&quot;Book does not exist&quot;);</span>
+<span class="nc" id="L111">			ad.setId(id);</span>
+<span class="nc" id="L112">			return new ResponseEntity&lt;AddResponse&gt;(ad, HttpStatus.NOT_FOUND);</span>
+		}
+
+	}
+	
+	@DeleteMapping(&quot;/books/{id}&quot;)
+	public ResponseEntity deleteBook(@PathVariable(&quot;id&quot;) String id) {
+<span class="fc" id="L119">		AddResponse ad = new AddResponse();</span>
+		Book book;
+		try {
+<span class="fc" id="L122">			book = repository.findById(id).get();</span>
+<span class="fc" id="L123">			repository.delete(book);</span>
+<span class="fc" id="L124">		} catch (Exception e) {</span>
+<span class="fc" id="L125">			throw new ResponseStatusException(HttpStatus.NOT_FOUND, &quot;Book not found&quot;);</span>
+<span class="fc" id="L126">		}</span>
+<span class="fc" id="L127">		return new ResponseEntity&lt;&gt;(&quot;Book is deleted&quot;, HttpStatus.OK);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

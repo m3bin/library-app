@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: edu.tus.library.controller.LibraryControllerMockMvcTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.852 s - in edu.tus.library.controller.LibraryControllerMockMvcTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.390 s -- in edu.tus.library.controller.LibraryControllerMockMvcTest
